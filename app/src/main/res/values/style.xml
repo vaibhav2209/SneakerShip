@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="SneakerShip.MaterialComponents.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/bg_shoe_size_chip</item>
+        <item name="chipStrokeColor">@color/primary_orange</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="android:textColor">@color/text_shoe_size_chip</item>
+    </style>
+
+</resources>

@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".sneaker_detail.presentation.activity.SneakerDetailActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintImage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@null"
+            android:rotation="180"
+            android:src="@drawable/chevron"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/primary_orange" />
+
+        <ImageView
+            android:id="@+id/ivBgShoe"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:contentDescription="@null"
+            android:src="@drawable/bg_shoe"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivBack" />
+
+        <ImageView
+            android:id="@+id/ivSneaker"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="@+id/ivBgShoe"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ivBgShoe" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/constraintDetail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:cardElevation="4dp"
+        android:background="@drawable/bg_cardview_top_radius"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintImage">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/tvSneakerName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:maxLines="1"
+                android:text="Nike"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvSneakerTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:maxLines="1"
+                android:text="This is demo text represent title"
+                android:textColor="@color/text_grey"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSneakerName" />
+
+            <TextView
+                android:id="@+id/tvSize"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:fontFamily="@font/poppins"
+                android:maxLines="1"
+                android:text="@string/size_uk"
+                android:textColor="@color/text_grey"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSneakerTitle" />
+
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipSpacingHorizontal="4dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/tvSize"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip7"
+                    style="@style/SneakerShip.MaterialComponents.Chip.Choice"
+                    android:layout_width="74dp"
+                    android:layout_height="wrap_content"
+                    android:text="7"
+                    android:textAlignment="center" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip8"
+                    style="@style/SneakerShip.MaterialComponents.Chip.Choice"
+                    android:layout_width="74dp"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="8"
+                    android:textAlignment="center" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip9"
+                    style="@style/SneakerShip.MaterialComponents.Chip.Choice"
+                    android:layout_width="74dp"
+                    android:layout_height="wrap_content"
+                    android:text="9"
+                    android:textAlignment="center" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <TextView
+                android:id="@+id/tvColor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/poppins"
+                android:maxLines="1"
+                android:text="@string/colour"
+                android:textColor="@color/text_grey"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSize" />
+
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupColour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipSpacingHorizontal="4dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/tvColor"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipOrange"
+                    style="@style/SneakerShip.MaterialComponents.Chip.Choice"
+                    android:layout_width="74dp"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    app:checkedIcon="@drawable/ic_check"
+                    app:checkedIconTint="@color/white"
+                    app:chipBackgroundColor="#FFE6D8"
+                    app:chipStrokeColor="#FFE6D8" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipBlue"
+                    style="@style/SneakerShip.MaterialComponents.Chip.Choice"
+                    android:layout_width="74dp"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:textAlignment="center"
+                    app:checkedIcon="@drawable/ic_check"
+                    app:checkedIconTint="@color/white"
+                    app:chipBackgroundColor="#0073BF"
+                    app:chipStrokeColor="#0073BF" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipCyan"
+                    style="@style/SneakerShip.MaterialComponents.Chip.Choice"
+                    android:layout_width="74dp"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    app:checkedIcon="@drawable/ic_check"
+                    app:checkedIconTint="@color/white"
+                    app:chipBackgroundColor="#C6F8FF"
+                    app:chipStrokeColor="#C6F8FF" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+
+            <TextView
+                android:id="@+id/tvPriceTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="42dp"
+                android:fontFamily="@font/poppins"
+                android:maxLines="1"
+                android:text="@string/price"
+                android:textColor="@color/text_grey"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvColor" />
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="$299"
+                android:layout_marginStart="14dp"
+                android:textColor="@color/primary_orange"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvPriceTitle"
+                app:layout_constraintStart_toEndOf="@+id/tvPriceTitle"
+                app:layout_constraintTop_toTopOf="@+id/tvPriceTitle" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.25" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddToCart"
+                android:layout_width="150dp"
+                android:layout_marginHorizontal="16dp"
+                android:paddingVertical="16dp"
+                android:layout_height="wrap_content"
+                android:text="@string/add_to_cart"
+                android:textAllCaps="false"
+                app:cornerRadius="14dp"
+                android:backgroundTint="@color/primary_orange"
+                app:layout_constraintBottom_toBottomOf="@+id/tvPriceTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvPriceTitle" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
