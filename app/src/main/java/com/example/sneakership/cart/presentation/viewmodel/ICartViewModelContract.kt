@@ -17,4 +17,5 @@ interface ICartViewModelContract {
 
     fun getCartTotal()
     fun observeCartTotal(): LiveData<Resource<CartTotal>>
+    fun removeAllCartItems()
 }

@@ -59,6 +59,13 @@ class CartViewModel @Inject constructor(
         }
     }
 
+    /*clear all cart Items*/
+    override fun removeAllCartItems() {
+        viewModelScope.launch {
+            repo.removeAllCartItems()
+        }
+    }
+
     /*Get Cart Total*/
     private val cartTotal = MutableLiveData<Resource<CartTotal>>()
 

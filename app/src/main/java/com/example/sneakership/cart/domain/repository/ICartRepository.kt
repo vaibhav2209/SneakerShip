@@ -13,4 +13,5 @@ interface ICartRepository {
     suspend fun deleteCartItem(sneaker: Sneaker)
 
     fun getCartTotal(): Flow<CartTotal>
+    fun removeAllCartItems()
 }

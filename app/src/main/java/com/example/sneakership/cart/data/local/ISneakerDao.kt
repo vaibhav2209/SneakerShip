@@ -19,4 +19,7 @@ interface ISneakerDao {
 
     @Delete
     suspend fun deleteCartItem(sneaker: SneakerEntity)
+
+    @Query("DELETE FROM SneakerEntity")
+    fun removeAllCartItems()
 }

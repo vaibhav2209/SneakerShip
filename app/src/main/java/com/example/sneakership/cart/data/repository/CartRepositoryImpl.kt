@@ -28,4 +28,7 @@ class CartRepositoryImpl @Inject constructor(
 
     override suspend fun deleteCartItem(sneaker: Sneaker) =
         dao.deleteCartItem(sneaker.toSneakerEntity())
+
+    override fun removeAllCartItems() =
+        dao.removeAllCartItems()
 }
