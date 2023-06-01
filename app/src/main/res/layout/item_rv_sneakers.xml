@@ -50,7 +50,7 @@
             android:id="@+id/ivSneaker"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:scaleType="centerInside"
+            android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="@+id/ivBgShoe"
             app:layout_constraintEnd_toEndOf="@+id/ivBgShoe"
             app:layout_constraintStart_toStartOf="@+id/ivBgShoe"

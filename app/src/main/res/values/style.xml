@@ -8,4 +8,17 @@
         <item name="android:textColor">@color/text_shoe_size_chip</item>
     </style>
 
+    <style name="SneakerShip.MaterialComponents.CardView.Top.Radius" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.CardView.Custom.Corners</item>
+    </style>
+
+
+    <style name="ShapeAppearanceOverlay.CardView.Custom.Corners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">58dp</item>
+        <item name="cornerSizeTopLeft">58dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
 </resources>

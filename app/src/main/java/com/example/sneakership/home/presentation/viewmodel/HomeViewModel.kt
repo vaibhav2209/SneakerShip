@@ -65,4 +65,11 @@ class HomeViewModel @Inject constructor(
 
     override fun observeGetSneakerById(): LiveData<Resource<Sneaker>> =
         sneakerById
+
+    /*search Query*/
+    private val searchQuery = MutableLiveData<String>()
+    fun searchQuery(query: String) : LiveData<String> {
+        searchQuery.value = query
+        return searchQuery
+    }
 }

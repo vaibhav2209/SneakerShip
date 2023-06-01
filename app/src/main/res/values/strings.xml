@@ -18,4 +18,17 @@
     <string name="colour">Colour :</string>
     <string name="price">Price : </string>
     <string name="add_to_cart">Add to cart</string>
+    <string name="cart">Cart</string>
+    <string name="order_details">Order details</string>
+    <string name="subtotal_placeholder">Subtotal : $%1$s</string>
+    <string name="texes_placeholder">Texes and Charges : $%1$s</string>
+    <string name="total">Total:</string>
+    <string name="check_out">Check Out</string>
+    <string name="cart_is_empty">Cart is empty</string>
+    <string name="price_placeholder">$%1$s</string>
+    <string name="home">Home</string>
+    <string name="blank">blank</string>
+    <string name="order_placed">Your order is placed!</string>
+    <string name="congratulations">Congratulations.</string>
+    <string name="go_home">Go Home</string>
 </resources>

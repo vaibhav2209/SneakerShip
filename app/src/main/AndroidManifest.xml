@@ -16,7 +16,13 @@
         android:theme="@style/Theme.SneakerShip"
         tools:targetApi="31">
         <activity
-            android:name=".SneakerDetailActivity"
+            android:name=".post_order.presentation.activity.PostOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".cart.presentation.activity.CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".sneaker_detail.presentation.activity.SneakerDetailActivity"
             android:exported="false" />
         <activity
             android:name=".home.presentation.activity.HomeActivity"
@@ -30,7 +36,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:theme="@style/Theme.SneakerShip.NoActionBar"></activity>
+            android:theme="@style/Theme.SneakerShip.NoActionBar" />
 
         <meta-data
             android:name="preloaded_fonts"
