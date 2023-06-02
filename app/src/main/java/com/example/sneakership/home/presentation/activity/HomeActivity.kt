@@ -50,6 +50,7 @@ class HomeActivity : AppCompatActivity(), SneakerAdapterListener {
         setupRecycler()
         bindSearch()
         setupBottomNavigationView()
+        setupRecyclerObserver()
         observeGetSneakers()
 
         getSneakers()
@@ -172,6 +173,33 @@ class HomeActivity : AppCompatActivity(), SneakerAdapterListener {
                 }
             }
         }
+    }
+
+    private fun setupRecyclerObserver() {
+        sneakersAdapter.registerAdapterDataObserver(object : AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                super.onItemRangeInserted(positionStart, itemCount)
+                showLogE("OnRecyclerUpdate :: onItemRangeInserted =>")
+                binding.rvSneakers.smoothScrollToPosition(0)
+            }
+
+            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+                super.onItemRangeChanged(positionStart, itemCount)
+                showLogE("OnRecyclerUpdate :: onItemRangeChanged =>")
+                binding.rvSneakers.smoothScrollToPosition(0)
+            }
+
+            override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
+                super.onItemRangeMoved(fromPosition, toPosition, itemCount)
+                showLogE("OnRecyclerUpdate :: onItemRangeMoved =>")
+                binding.rvSneakers.smoothScrollToPosition(0)
+            }
+            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+                super.onItemRangeRemoved(positionStart, itemCount)
+                showLogE("OnRecyclerUpdate :: onItemRangeRemoved =>")
+                binding.rvSneakers.smoothScrollToPosition(0)
+            }
+        })
     }
 
     private fun addToCartItem(sneaker: Sneaker) {
