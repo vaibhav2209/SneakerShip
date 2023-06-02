@@ -22,4 +22,12 @@
     <style name="Theme.SneakerShip.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.SneakerShip.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="SneakerShip.Theme.CustomSplashScreenTheme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_cloth</item>
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <item name="postSplashScreenTheme">@style/Theme.SneakerShip</item>
+    </style>
+
 </resources>
