@@ -50,7 +50,6 @@ class HomeActivity : AppCompatActivity(), SneakerAdapterListener {
         setupRecycler()
         bindSearch()
         setupBottomNavigationView()
-        setupRecyclerObserver()
         observeGetSneakers()
 
         getSneakers()
@@ -173,20 +172,6 @@ class HomeActivity : AppCompatActivity(), SneakerAdapterListener {
                 }
             }
         }
-    }
-
-    private fun setupRecyclerObserver() {
-        sneakersAdapter.registerAdapterDataObserver(object : AdapterDataObserver() {
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                super.onItemRangeInserted(positionStart, itemCount)
-                binding.rvSneakers.smoothScrollToPosition(0)
-            }
-
-            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
-                super.onItemRangeChanged(positionStart, itemCount)
-                binding.rvSneakers.smoothScrollToPosition(0)
-            }
-        })
     }
 
     private fun addToCartItem(sneaker: Sneaker) {
