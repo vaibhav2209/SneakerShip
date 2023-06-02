@@ -2,6 +2,8 @@ package com.example.sneakership.home.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.sneakership.application.AppNavigationRoute
@@ -15,27 +17,24 @@ class SneakersAdapter(
     private val listener: SneakerAdapterListener
 ) : RecyclerView.Adapter<SneakersAdapter.SneakersViewHolder>() {
 
-    private val sourceItems = mutableListOf<Sneaker>()
-
-    private var filteredItem = mutableListOf<Sneaker>()
-
-    fun addItems(items: List<Sneaker>) {
-        sourceItems.addAll(items)
-        filteredItem.clear()
-        filteredItem.addAll(sourceItems)
-        notifyItemRangeInserted(0, filteredItem.size)
-    }
-
-    fun filter(query: String) {
-        filteredItem = if (query.isNotEmpty()) {
-            sourceItems.filter { item ->
-                item.name.contains(query, ignoreCase = true)
-            }.toMutableList()
-        } else {
-            sourceItems
+    private val differCallback = object : DiffUtil.ItemCallback<Sneaker>() {
+        override fun areItemsTheSame(oldItem: Sneaker, newItem: Sneaker): Boolean {
+            return oldItem.id == newItem.id
         }
-        notifyDataSetChanged()
+
+        override fun areContentsTheSame(oldItem: Sneaker, newItem: Sneaker): Boolean {
+            return oldItem.id == newItem.id
+                    && oldItem.name == newItem.name
+                    && oldItem.brand == newItem.brand
+                    && oldItem.retailPrice == newItem.retailPrice
+                    && oldItem.title == newItem.title
+        }
     }
+
+    private val differ = AsyncListDiffer(this, differCallback)
+
+    fun submitList(items: List<Sneaker>) = differ.submitList(items)
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SneakersViewHolder {
         return SneakersViewHolder(
@@ -46,11 +45,11 @@ class SneakersAdapter(
     }
 
     override fun onBindViewHolder(holder: SneakersViewHolder, position: Int) {
-        holder.bind(filteredItem[holder.adapterPosition])
+        holder.bind(differ.currentList[holder.adapterPosition])
     }
 
     override fun getItemCount(): Int {
-        return filteredItem.size
+        return differ.currentList.size
     }
 
 

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sneakership.home.domain.model.Sneaker
+import com.example.sneakership.home.domain.model.SortBy
 import com.example.sneakership.home.domain.repository.ISneakerRepository
 import com.example.sneakership.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,9 +23,54 @@ class HomeViewModel @Inject constructor(
     /*Get Sneakers*/
     private val sneakers = MutableLiveData<Resource<List<Sneaker>>>()
 
-    override fun getSneakers() {
+
+    override fun getSneaker(sortBy: SortBy, q: String) {
+        when (sortBy) {
+            is SortBy.Relevant -> {
+                getSneakerByRelevant(q)
+            }
+            is SortBy.PriceLowest -> {
+                getSneakersByPriceLowest(q)
+            }
+            is SortBy.PriceHighest -> {
+                getSneakersByPriceHighest(q)
+            }
+        }
+    }
+
+    private fun getSneakerByRelevant(q: String) {
         viewModelScope.launch {
-            repo.getSneakers()
+            repo.getSneakers(q)
+                .onStart {
+                    sneakers.postValue(Resource.Loading)
+                }
+                .catch { e ->
+                    sneakers.postValue(Resource.Failure(e.message))
+                }
+                .collect { list ->
+                    sneakers.postValue(Resource.Success(list))
+                }
+        }
+    }
+
+    private fun getSneakersByPriceHighest(q: String) {
+        viewModelScope.launch {
+            repo.getSneakersByPriceHighest(q)
+                .onStart {
+                    sneakers.postValue(Resource.Loading)
+                }
+                .catch { e ->
+                    sneakers.postValue(Resource.Failure(e.message))
+                }
+                .collect { list ->
+                    sneakers.postValue(Resource.Success(list))
+                }
+        }
+    }
+
+    private fun getSneakersByPriceLowest(q: String) {
+        viewModelScope.launch {
+            repo.getSneakersByPriceLowest(q)
                 .onStart {
                     sneakers.postValue(Resource.Loading)
                 }
@@ -67,9 +113,18 @@ class HomeViewModel @Inject constructor(
         sneakerById
 
     /*search Query*/
-    private val searchQuery = MutableLiveData<String>()
-    fun searchQuery(query: String) : LiveData<String> {
-        searchQuery.value = query
-        return searchQuery
+    fun searchQuery(query: String) {
+        sneakers.value?.let {
+            if (it is Resource.Success) {
+                if (query.isNotEmpty()) {
+                    val filtered = it.result.filter { item ->
+                        item.name.contains(query, ignoreCase = true)
+                    }
+                    sneakers.postValue(Resource.Success(filtered))
+                } else {
+                    sneakers.postValue(Resource.Success(it.result))
+                }
+            }
+        }
     }
 }

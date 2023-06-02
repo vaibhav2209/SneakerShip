@@ -31,4 +31,7 @@
     <string name="order_placed">Your order is placed!</string>
     <string name="congratulations">Congratulations.</string>
     <string name="go_home">Go Home</string>
+    <string name="relevant">Relevant</string>
+    <string name="price_lowest">Price: Lowest</string>
+    <string name="price_highest">Price: Highest</string>
 </resources>

@@ -4,15 +4,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.example.sneakership.R
 import com.example.sneakership.application.AppNavigationRoute
-import com.example.sneakership.cart.presentation.adapter.CartAdapter
 import com.example.sneakership.cart.presentation.viewmodel.CartViewModel
 import com.example.sneakership.databinding.ActivityHomeBinding
 import com.example.sneakership.home.domain.model.Sneaker
+import com.example.sneakership.home.domain.model.SortBy
 import com.example.sneakership.home.presentation.adapter.SneakerAdapterListener
 import com.example.sneakership.home.presentation.adapter.SneakersAdapter
 import com.example.sneakership.home.presentation.viewmodel.HomeViewModel
@@ -23,6 +24,11 @@ import com.example.sneakership.utils.UiUtils.showLogE
 import com.example.sneakership.utils.UiUtils.showToast
 import com.example.sneakership.utils.network.NetworkUtils
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), SneakerAdapterListener {
@@ -44,6 +50,7 @@ class HomeActivity : AppCompatActivity(), SneakerAdapterListener {
         setupRecycler()
         bindSearch()
         setupBottomNavigationView()
+        setupRecyclerObserver()
         observeGetSneakers()
 
         getSneakers()
@@ -60,6 +67,25 @@ class HomeActivity : AppCompatActivity(), SneakerAdapterListener {
             showSearchBar(false)
             clearSearch()
             hideKeyBoard()
+        }
+
+        binding.tvSortBy.setOnClickListener {
+            showSortByLayout(!binding.llSortBy.isVisible)
+        }
+
+        binding.tvRelevant.setOnClickListener {
+            getSneakers(sortBy = SortBy.Relevant)
+            showSortByLayout(false)
+        }
+
+        binding.tvPriceHighest.setOnClickListener {
+            getSneakers(sortBy = SortBy.PriceHighest)
+            showSortByLayout(false)
+        }
+
+        binding.tvPriceLowest.setOnClickListener {
+            getSneakers(sortBy = SortBy.PriceLowest)
+            showSortByLayout(false)
         }
     }
 
@@ -84,15 +110,27 @@ class HomeActivity : AppCompatActivity(), SneakerAdapterListener {
     }
 
     private fun bindSearch() {
+        var job: Job? = null
         binding.etSearch.addTextChangedListener {
-            val query = it.toString().trim()
-            searchQuery(query)
+            it?.let { editable ->
+                job?.cancel()
+                val query = editable.toString().trim()
+                job = MainScope().launch {
+                    getSneakers()
+
+                    delay(500L)
+                }
+            }
         }
     }
 
     private fun clearSearch() {
         binding.etSearch.text?.clear()
     }
+
+    private fun getSearchQuery() =
+        binding.etSearch.text.toString().trim()
+
 
     private fun setupRecycler() {
         sneakersAdapter = SneakersAdapter(this)
@@ -104,17 +142,9 @@ class HomeActivity : AppCompatActivity(), SneakerAdapterListener {
         }
     }
 
-    private fun searchQuery(query: String) {
-        homeViewModel.searchQuery(query).observe(this) {
-            it?.let { q ->
-                sneakersAdapter.filter(q)
-            }
-        }
-    }
-
-    private fun getSneakers() {
+    private fun getSneakers(sortBy: SortBy = SortBy.Relevant) {
         if (NetworkUtils.hasInternetConnection(this)) {
-            homeViewModel.getSneakers()
+            homeViewModel.getSneaker(sortBy, getSearchQuery())
         } else {
             showToast(getString(R.string.check_connection))
         }
@@ -129,7 +159,7 @@ class HomeActivity : AppCompatActivity(), SneakerAdapterListener {
                     }
                     is Resource.Success -> {
                         showProgress(show = false)
-                        sneakersAdapter.addItems(res.result)
+                        sneakersAdapter.submitList(res.result)
                     }
                     is Resource.Failure -> {
                         showProgress(show = false)
@@ -143,6 +173,20 @@ class HomeActivity : AppCompatActivity(), SneakerAdapterListener {
                 }
             }
         }
+    }
+
+    private fun setupRecyclerObserver() {
+        sneakersAdapter.registerAdapterDataObserver(object : AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                super.onItemRangeInserted(positionStart, itemCount)
+                binding.rvSneakers.smoothScrollToPosition(0)
+            }
+
+            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+                super.onItemRangeChanged(positionStart, itemCount)
+                binding.rvSneakers.smoothScrollToPosition(0)
+            }
+        })
     }
 
     private fun addToCartItem(sneaker: Sneaker) {
@@ -173,5 +217,12 @@ class HomeActivity : AppCompatActivity(), SneakerAdapterListener {
             binding.cvSearch.visibility = View.VISIBLE
         else
             binding.cvSearch.visibility = View.GONE
+    }
+
+    private fun showSortByLayout(show: Boolean) {
+        if (show)
+            binding.llSortBy.visibility = View.VISIBLE
+        else
+            binding.llSortBy.visibility = View.GONE
     }
 }

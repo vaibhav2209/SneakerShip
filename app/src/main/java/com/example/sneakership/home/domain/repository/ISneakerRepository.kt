@@ -5,7 +5,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface ISneakerRepository {
 
-    fun getSneakers(): Flow<List<Sneaker>>
+    fun getSneakers(q: String): Flow<List<Sneaker>>
 
     fun getSneakersById(id: String): Flow<Sneaker?>
+    fun getSneakersByPriceLowest(q: String): Flow<List<Sneaker>>
+    fun getSneakersByPriceHighest(q: String): Flow<List<Sneaker>>
 }
