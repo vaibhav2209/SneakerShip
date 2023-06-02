@@ -25,8 +25,8 @@ object RetrofitContainer {
         okhttpClientBuilder.addInterceptor { chain ->
             val request = chain.request()
                 .newBuilder()
-                .addHeader(Constants.X_ACCESS_KEY, BuildConfig.X_ACCESS_KEY)
-                .addHeader(Constants.X_MASTER_KEY, BuildConfig.X_MASTER_KEY)
+                .addHeader(Constants.X_ACCESS_KEY, Constants.X_ACCESS_KEY_VALUE)
+                .addHeader(Constants.X_MASTER_KEY, Constants.X_MASTER_KEY_VALUE)
                 .build()
             chain.proceed(request)
         }
